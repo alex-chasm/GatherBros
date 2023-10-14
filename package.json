@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.1",
     "@rainbow-me/rainbowkit": "^1.1.1",
+    "dotenv": "^16.3.1",
     "geolib": "^3.3.4",
     "mapbox-gl": "^2.15.0",
     "mongodb": "^6.1.0",
