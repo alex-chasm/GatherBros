@@ -53,9 +53,9 @@ export default function Location() {
     fetchLocation()
   }, [])
 
-  if (status === 'unauthenticated') {
-    return redirect('/')
-  }
+  // if (status === 'unauthenticated') {
+  //   return redirect('/')
+  // }
 
   const refreshLocation = () => {
     if (navigator.geolocation) {

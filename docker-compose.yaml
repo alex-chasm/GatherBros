@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped 
+
+  # app:
+  #   depends_on:
+  #     - mongo
+  #   build: .
+  #   ports:
+  #     - 3000:3000
+  #   environment:  # This section defines environment variables
+  #     - NEXT_PUBLIC_API_URL=https://api.example.com
+  #     - NODE_ENV=development
+  #     - NEXTAUTH_SECRET=lalisalovemelalisaloveme
+  #     - NEXTAUTH_URL="http://localhost:3000/"
+  #
