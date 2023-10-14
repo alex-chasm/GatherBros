@@ -3,12 +3,11 @@
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { mantle, mantleTestnet } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, publicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mantle, mantleTestnet],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID! }), publicProvider()],
+  [publicProvider()],
 )
 
 const { connectors } = getDefaultWallets({
@@ -21,14 +20,17 @@ const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
   publicClient,
+  webSocketPublicClient
 })
 
-export default function WagmiProvider({children}: {children: React.ReactNode}) {
+export default function WagmiProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        {children}
-      </RainbowKitProvider>
+      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
     </WagmiConfig>
   )
 }

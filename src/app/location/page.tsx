@@ -2,6 +2,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useState } from 'react'
 import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl'
+import { usePublicClient } from 'wagmi'
 
 export default function Location() {
   const [userLocation, setUserLocation] = useState<null | {
@@ -22,6 +23,7 @@ export default function Location() {
     // height: '100vh',
   })
   const [error, setError] = useState<null | string>(null)
+  const client = usePublicClient()
 
   useEffect(() => {
     const fetchLocation = () => {
@@ -84,6 +86,7 @@ export default function Location() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={(evt) => setViewport(evt.viewState)}
+        style={{ width: 400, height: 400 }}
       >
         <Marker
           latitude={userLocation?.latitude ?? 0}
