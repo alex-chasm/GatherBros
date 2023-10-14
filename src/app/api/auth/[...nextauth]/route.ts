@@ -1,3 +1,5 @@
+import clientPromise from '@/lib/mongodb-adapter'
+import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import NextAuth, { AuthOptions } from 'next-auth'
 import TwitterProvider from 'next-auth/providers/twitter'
 
@@ -22,9 +24,10 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  adapter: MongoDBAdapter(clientPromise),
   async jwt({ token, user, account, profile, isNewUser }) {
     console.log(account)
-    console.log("prof", profile)
+    console.log('prof', profile)
     console.log(user)
     console.log(token)
 

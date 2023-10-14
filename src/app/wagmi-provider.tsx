@@ -6,7 +6,7 @@ import { mantle, mantleTestnet } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mantle, mantleTestnet],
+  [mantleTestnet, mantle],
   [publicProvider()],
 )
 
