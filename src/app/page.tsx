@@ -9,18 +9,20 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen w-screen flex-col items-center justify-between p-10">
-      <nav className="flex min-w-screen w-screen flex-row justify-between p-10">
+      <nav className="flex flex-row w-screen justify-between p-10">
         <ConnectButton />
         {!session && (
           <>
-            <p className="self-center">Not signed in </p><br />
-            <button onClick={() => signIn()}>Sign in</button>
+            <div className="flex flex-row w-1/4 justify-around">
+              <p className="">Not signed in</p>
+              <button className="bg-indigo-500 px-2 rounded" onClick={() => signIn()}>Sign in</button>
+            </div>
           </>
         )}
         {session && (
           <>
-            <p className="self-center">Signed in as {session?.user?.email}</p><br />
-            <button onClick={() => signOut()}>Sign out</button>
+            <p className="">Signed in as {session?.user?.email}</p><br />
+            <button className="bg-indigo-500 px-2 rounded" onClick={() => signOut()}>Sign out</button>
           </>
         )}
       </nav>
