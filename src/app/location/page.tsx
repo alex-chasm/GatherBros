@@ -11,6 +11,7 @@ import wMNTContract from '@/contract/wmnt-contract'
 import { useContractStore } from '@/contract/state'
 import Navbar from '@/components/navbar'
 import { redirect } from 'next/navigation'
+import { generateNearbyCoordinates } from '@/lib/generate-coordinates'
 
 export default function Location() {
   const [userLocation, setUserLocation] = useState<null | {
@@ -210,62 +211,45 @@ export default function Location() {
                 </text>
               </svg>
             </Marker>
-            <Marker
-              latitude={3.0214}
-              longitude={101.624042}
-              anchor="bottom"
-              color="red"
-            >
-              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
-                <circle
-                  cx="15"
-                  cy="15"
-                  r="13"
-                  fill="gold"
-                  stroke="black"
-                  stroke-width="2"
-                />
-                <text
-                  x="15"
-                  y="20"
-                  font-family="Arial"
-                  font-size="14"
-                  font-weight="bold"
-                  fill="black"
-                  text-anchor="middle"
+            {userLocation &&
+              generateNearbyCoordinates(
+                userLocation?.latitude ?? 0,
+                userLocation?.longitude ?? 0,
+              ).map((coord) => (
+                <Marker
+                  key={coord.latitude}
+                  latitude={coord.latitude}
+                  longitude={coord.longitude}
+                  anchor="bottom"
+                  color="red"
                 >
-                  M
-                </text>
-              </svg>
-            </Marker>
-            <Marker
-              latitude={3.0204}
-              longitude={101.622042}
-              anchor="bottom"
-              color="red"
-            >
-              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
-                <circle
-                  cx="15"
-                  cy="15"
-                  r="13"
-                  fill="gold"
-                  stroke="black"
-                  stroke-width="2"
-                />
-                <text
-                  x="15"
-                  y="20"
-                  font-family="Arial"
-                  font-size="14"
-                  font-weight="bold"
-                  fill="black"
-                  text-anchor="middle"
-                >
-                  M
-                </text>
-              </svg>
-            </Marker>
+                  <svg
+                    width="30"
+                    height="30"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="15"
+                      cy="15"
+                      r="13"
+                      fill="gold"
+                      stroke="black"
+                      stroke-width="2"
+                    />
+                    <text
+                      x="15"
+                      y="20"
+                      font-family="Arial"
+                      font-size="14"
+                      font-weight="bold"
+                      fill="black"
+                      text-anchor="middle"
+                    >
+                      M
+                    </text>
+                  </svg>
+                </Marker>
+              ))}
           </ReactMapGL>
         </div>
 
