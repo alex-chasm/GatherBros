@@ -1,10 +1,14 @@
 'use client'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { wmntContractAbi } from '@/contract/wmnt-contract-abi'
+import LocationContract from '@/contract/location-contract'
 import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl'
-import { usePublicClient } from 'wagmi'
+import ReactMapGL, { Marker } from 'react-map-gl'
+import { getContract, parseEther } from 'viem'
+import { usePublicClient, useWalletClient } from 'wagmi'
+import wMNTContract from '@/contract/wmnt-contract'
+import { useContractStore } from '@/contract/state'
 
 export default function Location() {
   const [userLocation, setUserLocation] = useState<null | {
@@ -15,18 +19,17 @@ export default function Location() {
     latitude: number
     longitude: number
     zoom: number
-    // width: string | number
-    // height: string | number
   }>({
     latitude: 40.73061,
     longitude: -73.935242,
     zoom: 10,
-    // width: '100%',
-    // height: '100vh',
   })
   const [error, setError] = useState<null | string>(null)
-  const client = usePublicClient()
+  const publicClient = usePublicClient()
+  const { data: walletClient, isError, isLoading } = useWalletClient()
   const { data: session, status } = useSession()
+  const { contracts, createWMNTContract, createLocationContract } =
+    useContractStore()
 
   useEffect(() => {
     const fetchLocation = () => {
@@ -56,6 +59,10 @@ export default function Location() {
   // if (status === 'unauthenticated') {
   //   return redirect('/')
   // }
+  //
+  if (!walletClient) {
+    return null
+  }
 
   const refreshLocation = () => {
     if (navigator.geolocation) {
@@ -79,23 +86,41 @@ export default function Location() {
     }
   }
 
+  createWMNTContract(walletClient)
+  if (contracts.wmnt) {
+    createLocationContract(walletClient, contracts.wmnt)
+  }
+  if (!contracts.location || !contracts.wmnt) {
+    return null
+  }
+
+  const getBalance = async () => {
+    await contracts.wmnt!.approve(contracts.location!.address, 1)
+
+    const balance = await contracts.wmnt!.contract.read.balanceOf([
+      walletClient.account.address,
+    ])
+  }
+
   const submitLocation = async () => {
-    const res = await fetch('/api/location', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        id: '652a4e4e64b809c31e44d371',
-        latitude: userLocation?.latitude ?? 0,
-        longitude: userLocation?.longitude ?? 0,
-        amount: 1,
-      }),
-      // body: JSON.stringify({
-      //   username: 'cloudre01',
-      //   name: 'Alex',
-      //   image_url: 'www.myimage.com',
-      //   wallet_address: '0x0',
-      // }),
-    })
-    console.log(await res.json())
+    await contracts.location!.swapForGBL(1)
+
+    // const res = await fetch('/api/location', {
+    //   method: 'PATCH',
+    //   body: JSON.stringify({
+    //     id: '652a4e4e64b809c31e44d371',
+    //     latitude: userLocation?.latitude ?? 0,
+    //     longitude: userLocation?.longitude ?? 0,
+    //     amount: 1,
+    //   }),
+    // body: JSON.stringify({
+    //   username: 'cloudre01',
+    //   name: 'Alex',
+    //   image_url: 'www.myimage.com',
+    //   wallet_address: '0x0',
+    // }),
+    // })
+    // console.log(await res.json())
   }
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -135,6 +160,12 @@ export default function Location() {
         onClick={submitLocation}
       >
         Make It Rain
+      </button>
+      <button
+        className="p-2 bg-red-600 text-white rounded"
+        onClick={getBalance}
+      >
+        Balance
       </button>
       {error && <p className="mt-4 text-red-500">Error: {error}</p>}
     </div>
