@@ -9,7 +9,7 @@ export default function Navbar() {
             <ConnectButton />
             { status === 'unauthenticated' && (
             <>
-                <div className="flex flex-wrap flex-row w-1/4 justify-around">
+                <div className="flex flex-row w-1/4 justify-around">
                     <p className="">Not signed in</p>
                     <button className="bg-indigo-500 px-2 rounded" onClick={() => signIn()}>Sign in</button>
                 </div>
