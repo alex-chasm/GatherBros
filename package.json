@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.13",
+    "@mui/material": "^5.14.13",
     "@rainbow-me/rainbowkit": "^1.1.1",
     "geolib": "^3.3.4",
     "mapbox-gl": "^2.15.0",

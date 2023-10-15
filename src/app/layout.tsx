@@ -6,6 +6,7 @@ import WagmiProvider from './wagmi-provider'
 import LoginProvider from './login-provider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]/route'
+import BottomNav from '@/components/bottom-nav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -72,10 +73,10 @@ export default async function RootLayout({
           color="#5bbad5"
         />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-        />
+        {/* <link */}
+        {/*   rel="stylesheet" */}
+        {/*   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" */}
+        {/* /> */}
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://yourdomain.com" />
@@ -100,6 +101,7 @@ export default async function RootLayout({
         <LoginProvider session={session}>
           <WagmiProvider>{children}</WagmiProvider>
         </LoginProvider>
+        <BottomNav />
       </body>
     </html>
   )
