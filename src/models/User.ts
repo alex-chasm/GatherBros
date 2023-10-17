@@ -1,8 +1,10 @@
 import mongoose from 'mongoose'
 
 interface Locations {
-  longitude: number
-  latitude: number
+  geo: {
+    type: 'Point'
+    coordinates: [number, number]
+  }
   amount: number
   claimed: boolean
 }
@@ -10,7 +12,7 @@ interface Locations {
 export interface Users extends mongoose.Document {
   username: string
   name: string
-  image_url: string
+  image: string
   locations: Locations[]
   min_check_in: number
 }
@@ -26,21 +28,28 @@ const UserSchema = new mongoose.Schema({
   },
   image_url: {
     type: String,
-    default: "",
+    default: '',
   },
   locations: [
     {
-      longitude: {
-        type: Number,
-        required: [true, 'Please include the longitude'],
-      },
-      latitude: {
-        type: Number,
-        required: [true, 'Please include the latitude'],
+      geo: {
+        type: {
+          type: String,
+          enum: ['Point'],
+          required: true,
+        },
+        coordinates: {
+          type: [Number],
+          required: true,
+        },
       },
       amount: {
         type: Number,
         required: [true, 'Please include the amount you want to set'],
+      },
+      claimed: {
+        type: Boolean,
+        default: false,
       },
     },
   ],
@@ -49,10 +58,8 @@ const UserSchema = new mongoose.Schema({
     default: 1,
     required: true,
   },
-  claimed: {
-    type: Boolean,
-    default: false,
-  }
 })
+
+UserSchema.index({ 'locations.geo': '2dsphere' })
 
 export default mongoose.models.User || mongoose.model<Users>('User', UserSchema)

@@ -1,615 +1,99 @@
-export const contractAbi = [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_WMNT",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InsufficientAllowance",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "spender",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "allowance",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "needed",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InsufficientBalance",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "balance",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "needed",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InvalidApprover",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "approver",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InvalidReceiver",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InvalidSender",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ERC20InvalidSpender",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "spender",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ExceedStakedAmount",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "InsufficientBalance",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "required",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "InvalidAmount",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "InvalidArrayInput",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "NotExpired",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "OwnableInvalidOwner",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "OwnableUnauthorizedAccount",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ReentrancyGuardReentrantCall",
-    "inputs": []
-  },
-  {
-    "type": "event",
-    "name": "Approval",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "spender",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "OwnershipTransferred",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousOwner",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "newOwner",
-        "internalType": "address",
-        "indexed": true
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Staked",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount",
-        "internalType": "uint256",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Transfer",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "to",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "Unstaked",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user",
-        "internalType": "address",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount",
-        "internalType": "uint256",
-        "indexed": false
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "contract IERC20"
-      }
-    ],
-    "name": "WMNT",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "name": "allowance",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "spender",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [
-      {
-        "type": "bool",
-        "name": "",
-        "internalType": "bool"
-      }
-    ],
-    "name": "approve",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "spender",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "name": "balanceOf",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint8",
-        "name": "",
-        "internalType": "uint8"
-      }
-    ],
-    "name": "decimals",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "distribute",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "recipients",
-        "internalType": "address[]"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "internalType": "uint256[]"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "string",
-        "name": "",
-        "internalType": "string"
-      }
-    ],
-    "name": "name",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ],
-    "name": "owner",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "renounceOwnership",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "stake",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "stakeInfo",
-        "internalType": "struct GatherBrosLocation.StakeInfo",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "amount",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "stakeStart",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "stakeStop",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "amount",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "stakeStart",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "stakeStop",
-        "internalType": "uint256"
-      }
-    ],
-    "name": "stakers",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "swapGBLforWMNT",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_amount",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "swapWMNTForGBL",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_amount",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "string",
-        "name": "",
-        "internalType": "string"
-      }
-    ],
-    "name": "symbol",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "name": "totalSupply",
-    "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [
-      {
-        "type": "bool",
-        "name": "",
-        "internalType": "bool"
-      }
-    ],
-    "name": "transfer",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [
-      {
-        "type": "bool",
-        "name": "",
-        "internalType": "bool"
-      }
-    ],
-    "name": "transferFrom",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "to",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "transferOwnership",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newOwner",
-        "internalType": "address"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "unstake",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "stakeInfo",
-        "internalType": "struct GatherBrosLocation.StakeInfo",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "amount",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "stakeStart",
-            "internalType": "uint256"
-          },
-          {
-            "type": "uint256",
-            "name": "stakeStop",
-            "internalType": "uint256"
-          }
-        ]
-      }
-    ]
+import { contractAbi } from '@/contract/location-contract-abi'
+import {
+  Account,
+  createPublicClient,
+  encodeAbiParameters,
+  getContract,
+  http,
+  parseAbiParameters,
+  parseEther,
+} from 'viem'
+import { mantleTestnet } from 'viem/chains'
+import { WalletClient } from 'wagmi'
+import wMNTContract from './wmnt-contract'
+
+export default class LocationContract {
+  public contract
+  public address: `0x${string}`
+  private readonly publicClient = createPublicClient({
+    chain: mantleTestnet,
+    transport: http(),
+  })
+
+  constructor(
+    private readonly walletClient: WalletClient,
+    private readonly wmntContract: wMNTContract,
+  ) {
+    this.address = '0x0752D867B997a0E70a1231e361d4E40564DE8093'
+    this.contract = getContract({
+      address: this.address,
+      abi: contractAbi,
+      publicClient: this.publicClient,
+      walletClient: walletClient,
+    })
+    this.walletClient = walletClient
   }
-]
+
+  async swapForWMNT(amount: number) {
+    // check if wallet has enough approval
+    const allowance = await this.contract.read.allowance([
+      this.walletClient.account.address,
+      this.contract.address,
+    ])
+
+    if (allowance < parseEther(amount.toString())) {
+      // Wallet does not have enough approval
+    } else {
+      // Wallet has enough approval
+    }
+    this.contract.write.swapGBLforWMNT([parseEther(amount.toString())])
+  }
+
+  async swapForGBL(amount: number) {
+    // check if wallet has enough approval
+    const allowance = await this.contract.read.allowance([
+      this.walletClient.account.address,
+      this.wmntContract!.address,
+    ])
+    if (allowance < parseEther(amount.toString())) {
+      const hash = await this.contract.write.approve([
+        this.contract.address,
+        BigInt(parseEther(amount.toString())),
+      ])
+
+      const transaction = await this.publicClient.waitForTransactionReceipt({
+        hash,
+      })
+
+      if (!transaction || transaction.status !== 'success') {
+        throw new Error('Transaction failed')
+      }
+    }
+    await this.contract.write.swapWMNTForGBL([
+      BigInt(parseEther(amount.toString())),
+    ])
+  }
+
+  async stake(account: Account, amount: number) {
+    const time = Math.floor(Date.now() / 1000)
+    const timeStop = time + 30 * 60
+
+    // const hash = await this.contract.read.balanceOf([
+    //   '0x08a80B42f8499C1C3f9e352632fB87E38F5Cbc80',
+    // ])
+    const hash = await this.contract.write.stake([
+      {
+        amount: BigInt(amount),
+        stakeStart: BigInt(time),
+        stakeStop: BigInt(timeStop),
+      },
+    ])
+    return hash
+  }
+
+  async unstake(amount: number) {
+    const hash = await this.contract.write.unstake([BigInt(amount)])
+
+    return hash
+  }
+}
